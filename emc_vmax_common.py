@@ -23,7 +23,6 @@ import six
 
 from cinder import exception
 from cinder.i18n import _, _LE, _LI, _LW
-from cinder.objects import fields
 from cinder.volume.drivers.emc import emc_vmax_fast
 from cinder.volume.drivers.emc import emc_vmax_https
 from cinder.volume.drivers.emc import emc_vmax_masking
@@ -2481,7 +2480,7 @@ class EMCVMAXCommon(object):
         LOG.info(_LI("Create Consistency Group: %(group)s."),
                  {'group': group['id']})
 
-        modelUpdate = {'status': fields.ConsistencyGroupStatus.AVAILABLE}
+	modelUpdate = {'status': 'available'}
         volumeTypeId = group['volume_type_id'].replace(",", "")
 
         cgName = self.utils.truncate_string(group['id'], 8)
@@ -2742,7 +2741,7 @@ class EMCVMAXCommon(object):
         for snapshot in snapshots:
             snapshots_model_update.append(
                 {'id': snapshot['id'], 'status': 'available'})
-        modelUpdate = {'status': fields.ConsistencyGroupStatus.AVAILABLE}
+	modelUpdate = {'status': 'available'}
 
         return modelUpdate, snapshots_model_update
 
@@ -4237,7 +4236,7 @@ class EMCVMAXCommon(object):
                      "This adds and/or removes volumes from a CG."),
                  {'group': group['id']})
 
-        modelUpdate = {'status': fields.ConsistencyGroupStatus.AVAILABLE}
+	modelUpdate = {'status': 'available'}
         volumeTypeId = group['volume_type_id'].replace(",", "")
 
         cg_name = self.utils.truncate_string(group['id'], 8)
@@ -4337,7 +4336,7 @@ class EMCVMAXCommon(object):
             raise exception.VolumeBackendAPIException(
                 data=exceptionMessage)
 
-        modelUpdate = {'status': fields.ConsistencyGroupStatus.AVAILABLE}
+	modelUpdate = {'status': 'available'}
 
         _poolInstanceName, storageSystem = (
             self._get_pool_and_storage_system(extraSpecs))
